@@ -7,6 +7,7 @@ import java.util.concurrent.Future;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
@@ -177,6 +178,33 @@ public class ShowTouchpointService {
 		logger.info("deleteTouchpoint(): will delete: " + tp);
 
 		createClient();
+
+        logger.debug("client running: {}",client.isRunning());
+
+        try {
+            HttpDelete del = new HttpDelete("http://localhost:8080/api/touchpoints");
+
+            logger.info("deleteTouchpoint(): about to execute request: " + del);
+
+            Future<HttpResponse> responseFuture = client.execute(del, null);
+            logger.info("deleteTouchpoint(): received response future...");
+
+            HttpResponse response = responseFuture.get();
+            logger.info("deleteTouchpoint(): received response value");
+
+            // check the response status
+            if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+                String err = "could not successfully execute request. Got status code: "
+                        + response.getStatusLine().getStatusCode();
+                logger.error(err);
+                throw new RuntimeException(err);
+            }
+
+        } catch (Exception e) {
+            String err = "got exception: " + e;
+            logger.error(err, e);
+            throw new RuntimeException(e);
+        }
 
 		logger.debug("client running: {}",client.isRunning());
 
