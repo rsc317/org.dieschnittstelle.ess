@@ -1,5 +1,6 @@
 package org.dieschnittstelle.ess.ser;
 
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import javax.servlet.http.HttpServlet;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import static org.dieschnittstelle.ess.utils.Utils.*;
 
 import org.apache.logging.log4j.Logger;
+import org.dieschnittstelle.ess.entities.crm.AbstractTouchpoint;
 
 public class TouchpointServiceServlet extends HttpServlet {
 
@@ -52,37 +54,30 @@ public class TouchpointServiceServlet extends HttpServlet {
 	/*
 	 * TODO: SER3 server-side implementation of createNewTouchpoint
 	 */
-	/*
+
 	@Override	
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) {
-
-		// assume POST will only be used for touchpoint creation, i.e. there is
-		// no need to check the uri that has been used
-
-		// obtain the executor for reading out the touchpoints from the servlet context using the touchpointCRUD attribute
+		logger.info("doPost()");
 
 		try {
-			// create an ObjectInputStream from the request's input stream
-		
-			// read an AbstractTouchpoint object from the stream
-		
-			// call the create method on the executor and take its return value
-		
-			// set the response status as successful, using the appropriate
-			// constant from HttpServletResponse
-		
-			// then write the object to the response's output stream, using a
-			// wrapping ObjectOutputStream
-		
-			// ... and write the object to the stream
-		
+			ObjectInputStream ois = new ObjectInputStream(request.getInputStream());
+			AbstractTouchpoint tp = (AbstractTouchpoint) ois.readObject();
+			ois.close();
+
+			TouchpointCRUDExecutor exec = (TouchpointCRUDExecutor) getServletContext().getAttribute("touchpointCRUD");
+			exec.createTouchpoint(tp);
+			response.setStatus(HttpServletResponse.SC_OK);
+
+			ObjectOutputStream oos = new ObjectOutputStream(response.getOutputStream());
+			oos.writeObject(tp);
+			oos.close();
 		} catch (Exception e) {
+			String err = "got exception: " + e;
+			logger.error(err, e);
 			throw new RuntimeException(e);
 		}
-
 	}
-	*/
 
 	/*
 	 * TODO: SER4 server-side implementation of deleteTouchpoint
