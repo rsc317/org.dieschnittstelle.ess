@@ -182,7 +182,7 @@ public class ShowTouchpointService {
         logger.debug("client running: {}",client.isRunning());
 
         try {
-            HttpDelete del = new HttpDelete("http://localhost:8080/api/touchpoints");
+            HttpDelete del = new HttpDelete("http://localhost:8080/api/touchpoints/" + tp.getId());
 
             logger.info("deleteTouchpoint(): about to execute request: " + del);
 

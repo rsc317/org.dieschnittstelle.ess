@@ -30,15 +30,13 @@ public class TouchpointServiceServlet extends HttpServlet {
         // touchpoints
 
         // obtain the executor for reading out the touchpoints
-        TouchpointCRUDExecutor exec = (TouchpointCRUDExecutor) getServletContext()
-                .getAttribute("touchpointCRUD");
+        TouchpointCRUDExecutor exec = (TouchpointCRUDExecutor) getServletContext().getAttribute("touchpointCRUD");
         try {
             // set the status
             response.setStatus(HttpServletResponse.SC_OK);
             // obtain the output stream from the response and write the list of
             // touchpoints into the stream
-            ObjectOutputStream oos = new ObjectOutputStream(
-                    response.getOutputStream());
+            ObjectOutputStream oos = new ObjectOutputStream(response.getOutputStream());
             // write the object
             oos.writeObject(exec.readAllTouchpoints());
             oos.close();
@@ -81,5 +79,22 @@ public class TouchpointServiceServlet extends HttpServlet {
      * TODO: SER4 server-side implementation of deleteTouchpoint
      */
 
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) {
+        logger.info("doDelete()");
+
+        TouchpointCRUDExecutor exec = (TouchpointCRUDExecutor) getServletContext().getAttribute("touchpointCRUD");
+        try {
+            request.getRequestURL();
+            String[] url_parts = request.getRequestURL().toString().split("/");
+            long id = Integer.parseInt(url_parts[url_parts.length - 1]);
+            exec.deleteTouchpoint(id);
+            response.setStatus(HttpServletResponse.SC_OK);
+        } catch (Exception e) {
+            String err = "got exception: " + e;
+            logger.error(err, e);
+            throw new RuntimeException(e);
+        }
+    }
 
 }
