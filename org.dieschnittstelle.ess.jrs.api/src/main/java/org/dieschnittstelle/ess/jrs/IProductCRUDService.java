@@ -2,33 +2,25 @@ package org.dieschnittstelle.ess.jrs;
 
 import org.dieschnittstelle.ess.entities.erp.IndividualisedProductItem;
 
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-/*
- * UE JRS2: 
- * deklarieren Sie hier Methoden fuer:
- * - die Erstellung eines Produkts
- * - das Auslesen aller Produkte
- * - das Auslesen eines Produkts
- * - die Aktualisierung eines Produkts
- * - das Loeschen eines Produkts
- * und machen Sie diese Methoden mittels JAX-RS Annotationen als WebService verfuegbar
- */
-
-/*
- * TODO JRS3: aendern Sie Argument- und Rueckgabetypen der Methoden von IndividualisedProductItem auf AbstractProduct
- */
+@Path("/products")
+@Consumes({MediaType.APPLICATION_JSON})
+@Produces({MediaType.APPLICATION_JSON})
 public interface IProductCRUDService {
-
-	public IndividualisedProductItem createProduct(IndividualisedProductItem prod);
-
-	public List<IndividualisedProductItem> readAllProducts();
-
-	public IndividualisedProductItem updateProduct(long id,
-												   IndividualisedProductItem update);
-
-	boolean deleteProduct(long id);
-
-	public IndividualisedProductItem readProduct(long id);
-			
+	@POST
+	IndividualisedProductItem createProduct(IndividualisedProductItem prod);
+	@GET
+	List<IndividualisedProductItem> readAllProducts();
+	@PUT
+	@Path("/{productsId}")
+	IndividualisedProductItem updateProduct(@PathParam("productsId") long id, IndividualisedProductItem update);
+	@DELETE
+	@Path("/{productsId}")
+	boolean deleteProduct(@PathParam("productsId") long id);
+	@GET
+	@Path("/{productsId}")
+	IndividualisedProductItem readProduct(@PathParam("productsId") long id);
 }
