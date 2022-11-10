@@ -38,15 +38,16 @@ public class ShowAnnotations {
             Field[] fields = klass.getDeclaredFields();
             for (Field field : fields) {
                 String name = field.getName();
+                String display_name = name;
 
                 if(field.isAnnotationPresent(DisplayAs.class)){
-                    name = field.getAnnotation(DisplayAs.class).value();
+                    display_name = field.getAnnotation(DisplayAs.class).value();
                 }
 
                 String getter_name = ReflectedStockItemBuilder.getAccessorNameForField("get", name);
                 Method getter = klass.getDeclaredMethod(getter_name);
                 Object val = getter.invoke(instance);
-                out_str.append("; ").append(name).append(": ").append(val.toString());
+                out_str.append("; ").append(display_name).append(": ").append(val.toString());
             }
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             // ignore that fuck
