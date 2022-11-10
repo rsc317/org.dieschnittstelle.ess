@@ -2,6 +2,7 @@ package org.dieschnittstelle.ess.basics;
 
 
 import org.dieschnittstelle.ess.basics.annotations.AnnotatedStockItemBuilder;
+import org.dieschnittstelle.ess.basics.annotations.DisplayAs;
 import org.dieschnittstelle.ess.basics.annotations.StockItemProxyImpl;
 import org.dieschnittstelle.ess.basics.reflection.ReflectedStockItemBuilder;
 
@@ -30,9 +31,6 @@ public class ShowAnnotations {
         consumer.doShopping(collection.getStockItems());
     }
 
-    /*
-     * TODO BAS3
-     */
     private static void showAttributes(Object instance) {
         Class klass = instance.getClass();
         StringBuilder out_str = new StringBuilder("{" + klass.getSimpleName());
@@ -40,6 +38,11 @@ public class ShowAnnotations {
             Field[] fields = klass.getDeclaredFields();
             for (Field field : fields) {
                 String name = field.getName();
+
+                if(field.isAnnotationPresent(DisplayAs.class)){
+                    name = field.getAnnotation(DisplayAs.class).value();
+                }
+
                 String getter_name = ReflectedStockItemBuilder.getAccessorNameForField("get", name);
                 Method getter = klass.getDeclaredMethod(getter_name);
                 Object val = getter.invoke(instance);
@@ -51,11 +54,5 @@ public class ShowAnnotations {
 
         out_str.append("}");
         show(out_str.toString());
-
-        // TODO BAS3: if the new @DisplayAs annotation is present on a field,
-        //  the string representation will not use the field's name, but the name
-        //  specified in the the annotation. Regardless of @DisplayAs being present
-        //  or not, the field's value will be included in the string representation.
     }
-
 }
