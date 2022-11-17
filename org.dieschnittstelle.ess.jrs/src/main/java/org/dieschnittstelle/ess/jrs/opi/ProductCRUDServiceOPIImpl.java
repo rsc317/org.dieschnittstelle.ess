@@ -25,6 +25,9 @@ import javax.ws.rs.core.MediaType;
  *  Zugegriffen wird auf diese Implementierung aus dem Testcase TestProductRESTServiceWithOpenAPI
  */
 // TODO: verwenden Sie die URI opi/products
+@Path("api/products")
+@Consumes({MediaType.APPLICATION_JSON})
+@Produces({MediaType.APPLICATION_JSON})
 public class ProductCRUDServiceOPIImpl {
 
 	private IProductCRUDService service;
@@ -38,6 +41,8 @@ public class ProductCRUDServiceOPIImpl {
 	 *  so zu instantiieren, dass es zur Laufzeit erfolgreich verwendet werden kann
 	 */
 
+    @POST
+    @Path("/individualized_item")
 	public IndividualisedProductItem createProduct(
 			IndividualisedProductItem prod) {
 		return (IndividualisedProductItem)this.service.createProduct(prod);
@@ -45,12 +50,16 @@ public class ProductCRUDServiceOPIImpl {
 
 	// TODO: ueberlegen Sie, wie Sie createCampaign() von createProduct() unterscheidbar machen koennen - wenn
 	//  Sie JRS3 umgesetzt haben, koennen Sie die derzeit noch auskommentierte Codezeile aktivieren
+    @POST
+    @Path("/campaign")
 	public Campaign createCampaign(
 			Campaign prod) {
 //		return (Campaign) this.service.createProduct(prod);
 		return null;
 	}
 
+    @GET
+    @Path("/individualized_item")
 	public List<IndividualisedProductItem> readAllProducts() {
 		return (List)this.service.readAllProducts()
 				.stream()
@@ -58,15 +67,21 @@ public class ProductCRUDServiceOPIImpl {
 				.collect(Collectors.toList());
 	}
 
+    @PUT
+    @Path("/individualized_item")
 	public IndividualisedProductItem updateProduct(long id,
 			IndividualisedProductItem update) {
 		return (IndividualisedProductItem)this.service.updateProduct(id,update);
 	}
 
+    @DELETE
+//    @Path("/individualized_item")
 	public boolean deleteProduct(long id) {
 		return this.service.deleteProduct(id);
 	}
 
+    @GET
+//    @Path("/individualized_item")
 	public IndividualisedProductItem readProduct(long id) {
 		IndividualisedProductItem item = (IndividualisedProductItem)this.service.readProduct(id);
 		return item;
