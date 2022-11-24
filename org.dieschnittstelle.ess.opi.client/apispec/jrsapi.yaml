@@ -386,6 +386,30 @@ components:
             type: "object"
             $ref: "#/components/schemas/org_dieschnittstelle_ess_entities_crm_CustomerTransaction"
       type: "object"
+    IndividualisedProductItem:
+      properties:
+        productType:
+          type: "string"
+          enum: ["BREAD", "ROLL", "PASTRY"]
+        expirationAfterStocked:
+          type: "integer"
+      type: "object"
+    ProductBundle:
+      properties:
+        id:
+          type: "integer"
+        units:
+          type: "integer"
+        product:
+          $ref: "#/components/schemas/IndividualisedProductItem"
+      type: "object"
+    Campaign:
+      properties:
+        bundles:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/ProductBundle"
+      type: "object"
 info:
   version: "0.1"
   contact:

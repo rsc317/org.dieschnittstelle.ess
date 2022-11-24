@@ -14,6 +14,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -40,6 +41,9 @@ public class ProductCRUDServiceOPIImpl {
 	 * TODO: implementieren Sie einen weiteren Konstruktor, der es Ihnen erlaubt, das service Attribut
 	 *  so zu instantiieren, dass es zur Laufzeit erfolgreich verwendet werden kann
 	 */
+	public ProductCRUDServiceOPIImpl(@Context ServletContext servletContext, @Context HttpServletRequest request) {
+		this.service = new ProductCRUDServiceImpl(servletContext, request);
+	}
 
     @POST
     @Path("/individualized_item")
