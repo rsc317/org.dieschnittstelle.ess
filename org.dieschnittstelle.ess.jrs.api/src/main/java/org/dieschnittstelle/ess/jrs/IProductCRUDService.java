@@ -1,7 +1,6 @@
 package org.dieschnittstelle.ess.jrs;
 
-import org.dieschnittstelle.ess.entities.erp.IndividualisedProductItem;
-
+import org.dieschnittstelle.ess.entities.erp.AbstractProduct;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -11,16 +10,16 @@ import java.util.List;
 @Produces({MediaType.APPLICATION_JSON})
 public interface IProductCRUDService {
 	@POST
-	IndividualisedProductItem createProduct(IndividualisedProductItem prod);
+	AbstractProduct createProduct(AbstractProduct prod);
 	@GET
-	List<IndividualisedProductItem> readAllProducts();
+	List<AbstractProduct> readAllProducts();
 	@PUT
 	@Path("/{productsId}")
-	IndividualisedProductItem updateProduct(@PathParam("productsId") long id, IndividualisedProductItem update);
+	AbstractProduct updateProduct(@PathParam("productsId") long id, AbstractProduct update);
 	@DELETE
 	@Path("/{productsId}")
 	boolean deleteProduct(@PathParam("productsId") long id);
 	@GET
 	@Path("/{productsId}")
-	IndividualisedProductItem readProduct(@PathParam("productsId") long id);
+	AbstractProduct readProduct(@PathParam("productsId") long id);
 }

@@ -20,9 +20,9 @@ import static org.dieschnittstelle.ess.utils.jsonb.JsonbJsonTypeInfoHandler.KLAS
  * concrete subclass of the abstract class, and thus allows to create correctly typed java objects
  * based on the untyped json data.
  */
-//@JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property=KLASSNAME_PROPERTY)
-//@JsonbTypeDeserializer(JsonbJsonTypeInfoHandler.class)
-//@JsonbTypeSerializer(JsonbJsonTypeInfoHandler.class)
+@JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property=KLASSNAME_PROPERTY)
+@JsonbTypeDeserializer(JsonbJsonTypeInfoHandler.class)
+@JsonbTypeSerializer(JsonbJsonTypeInfoHandler.class)
 public abstract class AbstractProduct implements Serializable, GenericCRUDEntity {
 
 	protected static Logger logger = org.apache.logging.log4j.LogManager.getLogger(AbstractProduct.class);
