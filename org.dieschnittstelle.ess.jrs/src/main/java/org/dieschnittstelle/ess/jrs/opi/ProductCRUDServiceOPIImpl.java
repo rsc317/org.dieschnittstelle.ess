@@ -26,7 +26,7 @@ import javax.ws.rs.core.MediaType;
  *  Zugegriffen wird auf diese Implementierung aus dem Testcase TestProductRESTServiceWithOpenAPI
  */
 // TODO: verwenden Sie die URI opi/products
-@Path("api/products")
+@Path("opi/products")
 @Consumes({MediaType.APPLICATION_JSON})
 @Produces({MediaType.APPLICATION_JSON})
 public class ProductCRUDServiceOPIImpl {
@@ -72,9 +72,8 @@ public class ProductCRUDServiceOPIImpl {
 	}
 
     @PUT
-    @Path("/individualized_item")
-	public IndividualisedProductItem updateProduct(long id,
-			IndividualisedProductItem update) {
+    @Path("/individualized_item/{productsId}")
+	public IndividualisedProductItem updateProduct(@PathParam("productsId") long id, IndividualisedProductItem update) {
 		return (IndividualisedProductItem)this.service.updateProduct(id,update);
 	}
 
