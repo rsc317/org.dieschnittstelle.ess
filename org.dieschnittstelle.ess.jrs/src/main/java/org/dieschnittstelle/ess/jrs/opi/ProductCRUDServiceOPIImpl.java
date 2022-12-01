@@ -19,13 +19,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-/*
- * TODO OPI1: Statten Sie diese Klasse so mit JAX-RS Annotationen aus, dass  alle Methoden
- *  im Rahmen der server-seitigen Web API aufrufbar sind. Sie koennen dafuer weitgehend
- *  die Annotationen uebernehmen, die Sie fuer IProductCRUDService in JRS genutzt haben.
- *  Zugegriffen wird auf diese Implementierung aus dem Testcase TestProductRESTServiceWithOpenAPI
- */
-// TODO: verwenden Sie die URI opi/products
+
 @Path("opi/products")
 @Consumes({MediaType.APPLICATION_JSON})
 @Produces({MediaType.APPLICATION_JSON})
@@ -37,10 +31,6 @@ public class ProductCRUDServiceOPIImpl {
 
 	}
 
-	/*
-	 * TODO: implementieren Sie einen weiteren Konstruktor, der es Ihnen erlaubt, das service Attribut
-	 *  so zu instantiieren, dass es zur Laufzeit erfolgreich verwendet werden kann
-	 */
 	public ProductCRUDServiceOPIImpl(@Context ServletContext servletContext, @Context HttpServletRequest request) {
 		this.service = new ProductCRUDServiceImpl(servletContext, request);
 	}
