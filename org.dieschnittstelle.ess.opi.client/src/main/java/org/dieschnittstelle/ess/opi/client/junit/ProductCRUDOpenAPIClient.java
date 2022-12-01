@@ -5,6 +5,9 @@ package org.dieschnittstelle.ess.opi.client.junit;
 //  generiert haben. Falls Ihre imports automatisch aktualisiert werden, dann entfernen Sie erst die Kommentare
 //  aus der Implementierung der Klasse und kommentieren Sie die imports erst danach ein.
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.apache.logging.log4j.Logger;
 import org.dieschnittstelle.ess.opi.client.api.DefaultApi;
 import org.dieschnittstelle.ess.opi.client.entities.Campaign;
@@ -23,7 +26,12 @@ public class ProductCRUDOpenAPIClient {
 
 		// TODO: OPI1: instantiieren Sie das serviceProxy Attribut unter Verwendung der generierten Klassen, und beruecksichtigen
 		//  Sie, dass bei der JSON Verarbeitung unbekannte Attribute ignoriert werden sollen.
-        serviceProxy = null;
+
+		JacksonJsonProvider provider = new JacksonJsonProvider();
+		provider.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+		List providers = new ArrayList();
+		providers.add(provider);
+        serviceProxy = JAXRSClientFactory.create("http://localhost:8080", DefaultApi.class, providers);
 	}
 
 	public IndividualisedProductItem createProduct(IndividualisedProductItem prod) {

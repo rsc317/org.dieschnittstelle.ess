@@ -68,13 +68,13 @@ public class ProductCRUDServiceOPIImpl {
 	}
 
     @DELETE
-//    @Path("/individualized_item")
+    @Path("/individualized_item")
 	public boolean deleteProduct(long id) {
 		return this.service.deleteProduct(id);
 	}
 
     @GET
-//    @Path("/individualized_item")
+    @Path("/individualized_item")
 	public IndividualisedProductItem readProduct(long id) {
 		IndividualisedProductItem item = (IndividualisedProductItem)this.service.readProduct(id);
 		return item;
