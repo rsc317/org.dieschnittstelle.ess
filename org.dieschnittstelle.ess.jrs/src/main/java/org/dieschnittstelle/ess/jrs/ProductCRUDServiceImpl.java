@@ -14,7 +14,7 @@ public class ProductCRUDServiceImpl implements IProductCRUDService {
 	public ProductCRUDServiceImpl(@Context ServletContext servletContext, @Context HttpServletRequest request) {
 		logger.info("<constructor>: " + servletContext + "/" + request);
 		this.productCRUD = (GenericCRUDExecutor<AbstractProduct>) servletContext.getAttribute("productCRUD");
-		logger.debug("read out the touchpointCRUD from the servlet context: " + this.productCRUD);
+		logger.debug("read out the productCRUD from the servlet context: " + this.productCRUD);
 	}
 
 	@Override
