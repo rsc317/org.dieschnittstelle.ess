@@ -67,6 +67,8 @@ public class ShowStockSystem {
 	}
 
 	public void createProducts() {
+		show("all products: " + productCRUD.readAllProducts());
+
 		// create products
 		productCRUD.createProduct(PRODUCT_1);
 		Utils.step();
