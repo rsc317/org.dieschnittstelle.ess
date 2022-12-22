@@ -11,7 +11,8 @@ import javax.json.bind.annotation.JsonbTypeDeserializer;
 import javax.json.bind.annotation.JsonbTypeSerializer;
 import javax.persistence.*;
 
-//@JsonbTypeSerializer(JsonbJsonTypeInfoHandler.class)
+@JsonbTypeSerializer(JsonbJsonTypeInfoHandler.class)
+@Entity
 @Schema(name = "IndividualisedProductItem")
 public class IndividualisedProductItem extends AbstractProduct implements Serializable {
 

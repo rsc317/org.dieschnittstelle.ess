@@ -13,6 +13,8 @@
 <!--		<jar-file></jar-file>-->
 		<!-- as we are using different PUs within a single deployment, we list the classes for each PU -->
 		<!-- TODO: new entity classes need to be added here! -->
+		<class>org.dieschnittstelle.ess.entities.erp.IndividualisedProductItem</class>
+		<class>org.dieschnittstelle.ess.entities.erp.AbstractProduct</class>
 		<class>org.dieschnittstelle.ess.entities.erp.PointOfSale</class>
 		<properties>
 			<!-- hibernate/wildfly automatic schema generation -->
