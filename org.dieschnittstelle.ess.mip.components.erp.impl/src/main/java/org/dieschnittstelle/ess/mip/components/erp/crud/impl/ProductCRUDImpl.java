@@ -8,6 +8,9 @@ import org.dieschnittstelle.ess.mip.components.erp.crud.api.ProductCRUD;
 import org.dieschnittstelle.ess.utils.interceptors.Logged;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.List;
@@ -18,16 +21,19 @@ import java.util.List;
 public class ProductCRUDImpl implements ProductCRUD {
     protected static Logger logger = org.apache.logging.log4j.LogManager.getLogger(ProductCRUDImpl.class);
 
+    @Inject
+    @EntityManagerProvider.ERPDataAccessor
+    private EntityManager em;
     @Override
     public AbstractProduct createProduct(AbstractProduct prod) {
+        em.persist(prod);
         return prod;
     }
 
     @Override
     public List<AbstractProduct> readAllProducts() {
-        IndividualisedProductItem dummy = new IndividualisedProductItem();
-        dummy.setName("ESS Dummy Product ");
-        return Arrays.asList(dummy);
+        Query query = em.createQuery("SELECT p from AbstractProduct p");
+        return query.getResultList();
     }
 
     @Override
