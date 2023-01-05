@@ -1,7 +1,6 @@
 package org.dieschnittstelle.ess.mip.components.erp.impl;
 
 import org.dieschnittstelle.ess.entities.erp.IndividualisedProductItem;
-import org.dieschnittstelle.ess.mip.components.erp.api.StockSystem;
 import org.dieschnittstelle.ess.mip.components.erp.api.StockSystemService;
 import org.dieschnittstelle.ess.mip.components.erp.crud.api.ProductCRUD;
 import org.dieschnittstelle.ess.utils.interceptors.Logged;
@@ -16,7 +15,7 @@ import java.util.List;
 @Logged
 public class StockSystemServiceImpl implements StockSystemService {
     @Inject
-    private StockSystem stockSystem;
+    private StockSystemImpl stockSystem;
     @Inject
     private ProductCRUD productCRUD;
 
