@@ -7,7 +7,8 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import javax.persistence.*;
 import java.io.Serializable;
-@Schema(name = "ProductBundle")
+@Entity
+@Table(name = "productbundle")
 public class ProductBundle implements Serializable {
 
 	protected static Logger logger = org.apache.logging.log4j.LogManager.getLogger(ProductBundle.class);
@@ -17,6 +18,8 @@ public class ProductBundle implements Serializable {
 	 */
 	private static final long serialVersionUID = 1501911067906145681L;
 
+	@Id
+	@GeneratedValue
 	private long id;
 
 	// this had been changed to AbstractProduct due to some jboss/jackson serialisation issue

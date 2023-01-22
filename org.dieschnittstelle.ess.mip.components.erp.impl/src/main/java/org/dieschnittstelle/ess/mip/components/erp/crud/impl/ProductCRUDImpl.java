@@ -55,6 +55,6 @@ public class ProductCRUDImpl implements ProductCRUD {
 
     @Override
     public List<Campaign> getCampaignsForProduct(long productID) {
-        return null;
+        return em.createQuery("SELECT DISTINCT prod FROM AbstractProduct prod WHERE prod.id = " + productID).getResultList();
     }
 }
