@@ -23,7 +23,7 @@ public interface StockSystemService {
 	 * adds some units of a product to the stock of a point of sale
 	 */
 	@POST
-	@Path("/add/{units}")
+	@Path("/add")
     void addToStock(
 			@QueryParam("prodId") long productId,
 			@QueryParam("posId") long pointOfSaleId,
@@ -34,7 +34,7 @@ public interface StockSystemService {
 	 * removes some units of a product from the stock of a point of sale
 	 */
 	@POST
-	@Path(("/remove/{units}"))
+	@Path(("/remove"))
     void removeFromStock(
 			@QueryParam("prodId") long productId,
 			@QueryParam("posId") long pointOfSaleId,
@@ -61,7 +61,7 @@ public interface StockSystemService {
 	 * returns the points of sale where some product is available
 	 */
 	@GET
-	@Path("pointsOfSale")
+	@Path("/pointsOfSale")
     List<Long> getPointsOfSale(@QueryParam("prodId") long productId);
 
 }

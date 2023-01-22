@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 import org.apache.logging.log4j.Logger;
 
-//@Entity
+@Entity
 @Table(name = "stock")
 // leave this commented out: The usage of IdClass is not working with OpenJPA, so we choose an alternative solution with an own id column
 //@IdClass(ProductAtPosPK.class)
@@ -14,6 +14,8 @@ public class StockItem {
 
 	// internally, we use an own id, but do not expose it to the users of this class,
 	// which will access instances by constraints on pos and/or product
+	@Id
+	@GeneratedValue
 	private long id;
 
 	// leave this commented out	- it is related to the IdClass usage
