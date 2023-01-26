@@ -7,7 +7,8 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import javax.persistence.*;
 import java.io.Serializable;
-@Schema(name = "ProductBundle")
+@Entity
+@Table(name = "productbundle")
 public class ProductBundle implements Serializable {
 
 	protected static Logger logger = org.apache.logging.log4j.LogManager.getLogger(ProductBundle.class);
@@ -17,11 +18,15 @@ public class ProductBundle implements Serializable {
 	 */
 	private static final long serialVersionUID = 1501911067906145681L;
 
+	@Id
+	@GeneratedValue
 	private long id;
 
 	// this had been changed to AbstractProduct due to some jboss/jackson serialisation issue
 	// in wildfly 18, which throws an error on unmarshalling, probably due to @JsonTypeInfo,
 	// but as we have migrated to TomEE in the meantime, we changed it back to the concrete class
+
+	@ManyToOne
 	private IndividualisedProductItem product;
 
 	private int units;
