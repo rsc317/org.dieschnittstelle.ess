@@ -25,6 +25,8 @@ public class ProductBundle implements Serializable {
 	// this had been changed to AbstractProduct due to some jboss/jackson serialisation issue
 	// in wildfly 18, which throws an error on unmarshalling, probably due to @JsonTypeInfo,
 	// but as we have migrated to TomEE in the meantime, we changed it back to the concrete class
+
+	@ManyToOne
 	private IndividualisedProductItem product;
 
 	private int units;
