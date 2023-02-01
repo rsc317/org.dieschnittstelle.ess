@@ -21,13 +21,14 @@ public class StockSystemServiceImpl implements StockSystemService {
 
     @Override
     public void addToStock(long productId, long pointOfSaleId, int units) {
-        IndividualisedProductItem prod = (IndividualisedProductItem) productCRUD.readProduct(productId);
-        stockSystem.addToStock(prod, pointOfSaleId,units);
+        IndividualisedProductItem product = (IndividualisedProductItem) productCRUD.readProduct(productId);
+        stockSystem.addToStock(product, pointOfSaleId,units);
     }
 
     @Override
     public void removeFromStock(long productId, long pointOfSaleId, int units) {
-
+        IndividualisedProductItem product = (IndividualisedProductItem) productCRUD.readProduct(productId);
+        stockSystem.removeFromStock(product, pointOfSaleId, -units);
     }
 
     @Override
@@ -40,14 +41,16 @@ public class StockSystemServiceImpl implements StockSystemService {
 
     @Override
     public int getUnitsOnStock(long productId, long pointOfSaleId) {
+        IndividualisedProductItem product = (IndividualisedProductItem) productCRUD.readProduct(productId);
+
         if(pointOfSaleId == 0) {
-            return stockSystem.getTotalUnitsOnStock((IndividualisedProductItem) productCRUD.readProduct(productId));
+            return stockSystem.getTotalUnitsOnStock(product);
         }
-        return 0;
+        return stockSystem.getUnitsOnStock(product, pointOfSaleId);
     }
 
     @Override
     public List<Long> getPointsOfSale(long productId) {
-        return null;
+        return stockSystem.getPointsOfSale((IndividualisedProductItem) productCRUD.readProduct(productId));
     }
 }
