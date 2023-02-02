@@ -28,7 +28,7 @@ public class StockSystemServiceImpl implements StockSystemService {
     @Override
     public void removeFromStock(long productId, long pointOfSaleId, int units) {
         IndividualisedProductItem product = (IndividualisedProductItem) productCRUD.readProduct(productId);
-        stockSystem.removeFromStock(product, pointOfSaleId, -units);
+        stockSystem.removeFromStock(product, pointOfSaleId, units);
     }
 
     @Override

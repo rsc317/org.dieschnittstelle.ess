@@ -12,7 +12,10 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @ApplicationScoped
 @Transactional
@@ -59,15 +62,15 @@ public class StockSystemImpl implements StockSystem {
     @Override
     public List<IndividualisedProductItem> getAllProductsOnStock() {
         List<PointOfSale> posList = posCRUD.readAllPointsOfSale();
-        List<IndividualisedProductItem> products = new ArrayList<>();
+        HashMap<Long, IndividualisedProductItem> products = new HashMap<>();
 
         for(PointOfSale pos: posList) {
-            for ( StockItem si :stockItemCRUD.readStockItemsForPointOfSale(pos)){
-                products.add(si.getProduct());
+            for (StockItem si :stockItemCRUD.readStockItemsForPointOfSale(pos)){
+                products.put(si.getProduct().getId(), si.getProduct());
             }
         }
 
-        return products;
+        return new ArrayList<>(products.values());
     }
 
     @Override
