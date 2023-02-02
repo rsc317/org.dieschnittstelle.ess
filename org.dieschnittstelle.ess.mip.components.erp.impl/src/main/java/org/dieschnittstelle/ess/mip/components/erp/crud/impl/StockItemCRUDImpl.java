@@ -54,16 +54,18 @@ public class StockItemCRUDImpl implements StockItemCRUD {
 
     @Override
     public StockItem updateStockItem(StockItem item) {
-        return null;
+        return em.merge(item);
     }
 
     @Override
     public List<StockItem> readStockItemsForProduct(IndividualisedProductItem prod) {
-        return null;
+        return em.createQuery("SELECT DISTINCT si FROM StockItem si " +
+                "WHERE si.product.id = " + prod.getId()).getResultList();
     }
 
     @Override
     public List<StockItem> readStockItemsForPointOfSale(PointOfSale pos) {
-        return null;
+        return em.createQuery("SELECT DISTINCT si FROM StockItem si " +
+                "WHERE si.pos.id = " + pos.getId()).getResultList();
     }
 }

@@ -11,7 +11,11 @@ import org.dieschnittstelle.ess.utils.interceptors.Logged;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @ApplicationScoped
 @Transactional
@@ -40,31 +44,60 @@ public class StockSystemImpl implements StockSystem {
 
     @Override
     public void removeFromStock(IndividualisedProductItem product, long pointOfSaleId, int units) {
-
+        addToStock(product, pointOfSaleId, -units);
     }
 
     @Override
     public List<IndividualisedProductItem> getProductsOnStock(long pointOfSaleId) {
-        return null;
+        PointOfSale pos = posCRUD.readPointOfSale(pointOfSaleId);
+        List<IndividualisedProductItem> products = new ArrayList<>();
+
+        for ( StockItem si :stockItemCRUD.readStockItemsForPointOfSale(pos)){
+            products.add(si.getProduct());
+        }
+
+        return products;
     }
 
     @Override
     public List<IndividualisedProductItem> getAllProductsOnStock() {
-        return null;
+        List<PointOfSale> posList = posCRUD.readAllPointsOfSale();
+        HashMap<Long, IndividualisedProductItem> products = new HashMap<>();
+
+        for(PointOfSale pos: posList) {
+            for (StockItem si :stockItemCRUD.readStockItemsForPointOfSale(pos)){
+                products.put(si.getProduct().getId(), si.getProduct());
+            }
+        }
+
+        return new ArrayList<>(products.values());
     }
 
     @Override
     public int getUnitsOnStock(IndividualisedProductItem product, long pointOfSaleId) {
-        return 0;
+        PointOfSale pos = posCRUD.readPointOfSale(pointOfSaleId);
+        return stockItemCRUD.readStockItem(product, pos).getUnits();
     }
 
     @Override
     public int getTotalUnitsOnStock(IndividualisedProductItem product) {
-        return 0;
+        int totalUnits = 0;
+        for (StockItem si : stockItemCRUD.readStockItemsForProduct(product)) {
+            totalUnits += si.getUnits();
+        }
+
+        return totalUnits;
     }
 
     @Override
     public List<Long> getPointsOfSale(IndividualisedProductItem product) {
-        return null;
+        List<StockItem> siList = stockItemCRUD.readStockItemsForProduct(product);
+        List<Long> posList = new ArrayList<>();
+
+        for(StockItem si: siList) {
+            posList.add(si.getPos().getId());
+        }
+
+        return posList;
     }
 }
